@@ -1,0 +1,60 @@
+-- ============================
+-- BANKING DATABASE SETUP SQL
+-- ============================
+
+-- Create Customer Table
+CREATE TABLE Customer (
+  cust_no VARCHAR2(10) PRIMARY KEY,
+  name VARCHAR2(50),
+  phoneno VARCHAR2(15),
+  city VARCHAR2(50)
+);
+
+-- Create Branch Table
+CREATE TABLE Branch (
+  branch_code VARCHAR2(10) PRIMARY KEY,
+  branch_name VARCHAR2(50),
+  branch_city VARCHAR2(50)
+);
+
+-- Create Account Table
+CREATE TABLE Account (
+  account_no VARCHAR2(10) PRIMARY KEY,
+  cust_no VARCHAR2(10),
+  type VARCHAR2(10),
+  balance NUMBER(10,2),
+  branch_code VARCHAR2(10),
+  FOREIGN KEY (cust_no) REFERENCES Customer(cust_no),
+  FOREIGN KEY (branch_code) REFERENCES Branch(branch_code)
+);
+
+-- Create Loan Table
+CREATE TABLE Loan (
+  loan_no VARCHAR2(10) PRIMARY KEY,
+  cust_no VARCHAR2(10),
+  amount NUMBER(10,2),
+  branch_code VARCHAR2(10),
+  FOREIGN KEY (cust_no) REFERENCES Customer(cust_no),
+  FOREIGN KEY (branch_code) REFERENCES Branch(branch_code)
+);
+
+-- ======================
+-- Insert Sample Records
+-- ======================
+
+-- Customers
+INSERT INTO Customer VALUES ('C0011', 'ANWESHA DAS', '9999999999', 'BHUB');
+INSERT INTO Customer VALUES ('C0012', 'SACHIN SINGH', '9898989898', 'CTC');
+INSERT INTO Customer VALUES ('C0013', 'ARJUN MISHRA', '7777777777', 'BBSR');
+
+-- Branches
+INSERT INTO Branch VALUES ('B001', 'Main Branch', 'BHUB');
+INSERT INTO Branch VALUES ('B002', 'CTC Branch', 'CTC');
+
+-- Accounts
+INSERT INTO Account VALUES ('A0008', 'C0011', 'Savings', 5000, 'B001');
+INSERT INTO Account VALUES ('A0005', 'C0012', 'Current', 7000, 'B002');
+
+-- Loans
+INSERT INTO Loan VALUES ('L0001', 'C0011', 15000, 'B001');
+INSERT INTO Loan VALUES ('L0002', 'C0012', 25000, 'B002');
